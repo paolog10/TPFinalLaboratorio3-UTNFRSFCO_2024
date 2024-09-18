@@ -62,15 +62,15 @@
 
         if (esValido) {
           localStorage.setItem('idUsuario', this.idUsuario);
-          //this.$router.push({ name: "MainView" }); 
+          this.$router.push({ name: "panelView" }); 
         } else {
           this.errorIdUsuario = true;
           this.idUsuario = '';
 
           setTimeout(() => {
             this.errorIdUsuario = false; // Ocultamos el mensaje de error
-            this.$router.push({ name: "LoginView" });
-          }, 3000);
+            this.$router.push({ name: "loginView" });
+          }, 1000);
         }
       },
     }
