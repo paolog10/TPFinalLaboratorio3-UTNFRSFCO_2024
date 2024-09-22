@@ -3,6 +3,9 @@
     <nav class="barra-navegacion">
       <div>
         <span>{{ darMensajeBienvenida }}</span>
+        <router-link to="/comprar-vender" class="comprar-vender">
+          Comprar/Vender
+        </router-link>
       </div>
       <button 
         @click="cerrarSesion" 
@@ -47,6 +50,7 @@
 <script>
 import LoadingSpinner from '../components/LoadingSpinner';
 import { obtenerPrecios } from '@/services/apiCriptoYa';
+import { useToast } from 'vue-toastification';
 
 export default {
   components: {
@@ -80,13 +84,15 @@ export default {
     },
 
     async obtenerPrecios() {
+      const toast = useToast();
+
       try {
         for (const endpoint of this.endpointsPrecios) {
           let precioCriptomoneda = await obtenerPrecios(endpoint);
           this.preciosCriptomonedas.push(precioCriptomoneda);
         }
       } catch (error) {
-        console.error('Error al obtener los precios de las criptomonedas:', error);
+        toast.error('Error al obtener los precios de las criptomonedas');
       }
     },
   },
@@ -173,6 +179,11 @@ tr:hover td {
   justify-content: center;
   align-items: center;
   height: 100vh; /* Altura completa de la pantalla */
+}
+
+.comprar-vender {
+  text-decoration: none;
+  color: #4caf50;
 }
 </style>
 

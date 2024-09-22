@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 //import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import PanelView from '../views/PanelView.vue'
+import CompraVenta from '../components/CompraVenta.vue'
 
 const routes = [
   // {
@@ -26,6 +27,11 @@ const routes = [
     path: '/panel',
     name: 'panelView',
     component: PanelView
+  },
+  {
+    path: '/comprar-vender',
+    name: 'compraVenta',
+    component: CompraVenta
   },
 ]
 
