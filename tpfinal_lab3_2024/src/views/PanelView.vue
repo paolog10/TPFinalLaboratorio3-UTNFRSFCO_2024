@@ -67,12 +67,6 @@ export default {
         "https://argenbtc.com/img/iconos/f_tether.svg",
         "https://argenbtc.com/img/iconos/f_dai.svg",
       ],
-      endpointsPrecios: [
-        "/btc/ars/1", 
-        "/eth/ars/1",
-        "/usdt/ars/1", 
-        "/dai/ars/1"
-      ],
       preciosCriptomonedas: [],
     }
   },
@@ -83,14 +77,11 @@ export default {
       this.$router.push({ name: 'loginView' });
     },
 
-    async obtenerPrecios() {
+    async MostrarPrecios() {
       const toast = useToast();
 
       try {
-        for (const endpoint of this.endpointsPrecios) {
-          let precioCriptomoneda = await obtenerPrecios(endpoint);
-          this.preciosCriptomonedas.push(precioCriptomoneda);
-        }
+        this.preciosCriptomonedas = await obtenerPrecios();
       } catch (error) {
         toast.error('Error al obtener los precios de las criptomonedas');
       }
@@ -112,7 +103,7 @@ export default {
   },
 
   created(){
-    this.obtenerPrecios();
+    this.MostrarPrecios();
   }
 }
 </script>

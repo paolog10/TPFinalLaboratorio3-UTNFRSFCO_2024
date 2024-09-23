@@ -4,12 +4,22 @@ const apiCriptoYa = axios.create({
   baseURL: "https://criptoya.com/api/argenbtc",
 });
 
-export const obtenerPrecios = async (endpoint) => {
+const endpointsPrecios = [
+  "/btc/ars/1", 
+  "/eth/ars/1",
+  "/usdt/ars/1", 
+  "/dai/ars/1"
+];
+
+export const obtenerPrecios = async () => {
   try {
-    const response = await apiCriptoYa.get(endpoint);
-    return response.data; 
+    const preciosPromises = endpointsPrecios.map((endpoint) =>
+      apiCriptoYa.get(endpoint)
+    );
+    const precios = await Promise.all(preciosPromises);
+    return precios.map((response) => response.data);
   } catch (error) {
-    console.error('Error al obtener los precios:', error);
+    console.error("Error al obtener los precios:", error);
     throw error;
   }
 };
