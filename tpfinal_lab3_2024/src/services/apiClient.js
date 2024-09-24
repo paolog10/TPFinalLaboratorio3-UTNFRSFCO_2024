@@ -9,4 +9,13 @@ const apiClient = axios.create({
   headers: {'x-apikey': '60eb09146661365596af552f'}
 });
 
+export const nuevaCompra = async (datosCompra) => {
+  try {
+    let response = await apiClient.post('transactions', datosCompra);
+    console.log("response: ", response)
+  } catch (error) {
+    console.error('Error al comprar, intente nuevamente', error);
+  } 
+};
+
 export default apiClient

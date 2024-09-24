@@ -17,12 +17,13 @@
           <label>Criptomoneda:</label>
           <select id="criptomoneda" 
             v-model="criptomonedaSeleccionada"
+            @change="obtenerPrecio"
           > 
             <option disabled selected>Selecciona criptomoneda</option>
-            <option value="bitcoin">Bitcoin</option>
-            <option value="ethereum">Ethereum</option>
-            <option value="tether">USDT</option>
-            <option value="dai">Dai</option>
+            <option value="BTC">Bitcoin</option>
+            <option value="ETH">Ethereum</option>
+            <option value="UDST">USDT</option>
+            <option value="DAI">Dai</option>
           </select>
         </div>
 
@@ -35,12 +36,11 @@
         <button
           type="reset"
           class="btn-reset"
-          @click="resetInput"
+          @click="resetFormulario"
         >
           Refrescar
         </button>
         
-        <p v-if="compraExitosa" class="exito">Compra con éxito.</p>
       </form>
     </div>
   </div>
@@ -48,6 +48,8 @@
 
 <script>
 import { useToast } from 'vue-toastification';
+import { nuevaCompra } from '../services/apiClient';
+import { obtenerPrecioAskCriptomoneda } from "../services/apiCriptoYa";
 
 export default {
   name: 'CompraVenta',
@@ -58,11 +60,12 @@ export default {
       compraExitosa: false,
       errorCompra: null,
       clienteId: localStorage.getItem('idUsuario'),
+      precioAsk: null
     }
   },
 
   methods: {
-    realizarCompra() { 
+    async realizarCompra() { 
       const toast = useToast();     
       let cantidadParseada = parseFloat(this.cantidadCompraCriptomoneda);
 
@@ -79,7 +82,7 @@ export default {
         }
         toast.error(this.errorCompra);
         this.compraExitosa = false;
-        this.resetInput();
+        this.resetFormulario();
         return;
       }
 
@@ -88,17 +91,38 @@ export default {
         action: "purchase",
         crypto_code: this.criptomonedaSeleccionada,
         crypto_amount: cantidadParseada,
-        money: "btc",
+        money: this.precioAsk * cantidadParseada,
         datetime: new Date().toISOString() //formato iso
       };
-      console.log(compraCriptomoneda);
-      this.compraExitosa = true;
-      toast.success(`Compra de ${cantidadParseada} ${this.criptomonedaSeleccionada} realizada con éxito!`);
-      this.resetInput();
+
+      try {
+        const resultado = await nuevaCompra(compraCriptomoneda);
+        this.compraExitosa = true;
+        toast.success(`Compra exitosa: ${resultado}`);
+        this.resetFormulario();
+      } catch (error) {
+        toast.error(`Error al realizar la compra: ${error.message}`);
+      }
 
     },
 
-    resetInput() {
+    async obtenerPrecio() {
+      try {
+        const precio = await obtenerPrecioAskCriptomoneda(this.criptomonedaSeleccionada);
+        
+        if (precio) {
+          this.precioAsk = precio;
+          console.log(`Precio ask obtenido: ${precio}`);
+        } else {
+          console.error('No se pudo obtener el precio');
+        }
+      } catch (error) {
+        this.errorCompra = `Error al obtener el precio de la criptomoneda: ${error.message}`;
+        console.error(this.errorCompra);
+      }
+    },
+    
+    resetFormulario() {
       this.cantidadCompraCriptomoneda = "";
       this.criptomonedaSeleccionada = "";
     },

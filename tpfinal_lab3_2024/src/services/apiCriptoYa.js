@@ -24,4 +24,18 @@ export const obtenerPrecios = async () => {
   }
 };
 
+export const obtenerPrecioAskCriptomoneda = async (criptomoneda) => {
+  try {
+    const response = await apiCriptoYa.get(`/${criptomoneda}/ARS/0.1`);
+    
+    const precioAsk = response.data.ask;
+    console.log(`Precio ask de ${criptomoneda}:`, precioAsk);
+    
+    return precioAsk;
+  } catch (error) {
+    console.error(`Error al obtener el precio ask de ${criptomoneda}:`, error);
+    throw error;
+  }
+};
+
 export default apiCriptoYa
