@@ -91,7 +91,7 @@ export default {
         action: "purchase",
         crypto_code: this.criptomonedaSeleccionada,
         crypto_amount: cantidadParseada,
-        money: this.precioAsk * cantidadParseada,
+        money: (this.precioAsk * cantidadParseada).toFixed(2),
         datetime: new Date().toISOString() //formato iso
       };
 
@@ -99,6 +99,8 @@ export default {
         const resultado = await nuevaCompra(compraCriptomoneda);
         this.compraExitosa = true;
         toast.success(`Compra exitosa: ${resultado}`);
+
+        this.$router.push('/historialMovimientos'); //redirijo
         this.resetFormulario();
       } catch (error) {
         toast.error(`Error al realizar la compra: ${error.message}`);

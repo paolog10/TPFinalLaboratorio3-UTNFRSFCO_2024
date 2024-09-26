@@ -6,6 +6,9 @@
         <router-link to="/comprar-vender" class="comprar-vender">
           Comprar/Vender
         </router-link>
+        <router-link to="/historialMovimientos" class="comprar-vender">
+          Mi Historial
+        </router-link>
       </div>
       <button 
         @click="cerrarSesion" 
