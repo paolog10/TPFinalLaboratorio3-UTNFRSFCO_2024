@@ -40,7 +40,13 @@
         >
           Refrescar
         </button>
-        
+        <button
+          type="button"
+          class="btn-cancelar"
+          @click="cancelarCompra"
+        >
+          Cancelar
+        </button>
       </form>
     </div>
   </div>
@@ -52,7 +58,7 @@ import { nuevaCompra } from '../services/apiClient';
 import { obtenerPrecioAskCriptomoneda } from "../services/apiCriptoYa";
 
 export default {
-  name: 'CompraVenta',
+  name: 'FormularioCompra',
   data() {
     return {
       cantidadCompraCriptomoneda: null,
@@ -129,6 +135,9 @@ export default {
       this.criptomonedaSeleccionada = "";
     },
 
+    cancelarCompra() {
+      this.$router.push('/panel');
+    }
   },
 
 }
@@ -144,19 +153,45 @@ export default {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-.botonCompra {
-  display: block;
-  width: 100%;
+.botonCompra, .btn-reset, .btn-cancelar {
   padding: 10px;
-  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  flex: 1; 
+  margin: 0 5px; 
+}
+
+.botonCompra {
+  background-color: #4CAF50;
 }
 
 .botonCompra:hover {
   background-color: #45a049;
+}
+
+.btn-reset {
+  background-color: #f44336;
+}
+
+.btn-reset:hover {
+  background-color: #d32f2f;
+}
+
+.btn-cancelar {
+  background-color: #ff9800;
+}
+
+.btn-cancelar:hover {
+  background-color: #fb8c00;
+}
+
+/* Alinear los botones horizontalmente */
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
 input,
@@ -182,17 +217,4 @@ label {
 .exito {
   color: green;
 }
-
-.btn-reset {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  background-color: red;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 </style>
-

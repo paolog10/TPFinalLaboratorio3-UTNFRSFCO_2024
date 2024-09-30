@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 //import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import PanelView from '../views/PanelView.vue'
-import CompraVenta from '../components/CompraVenta.vue'
+import FormularioCompra from '../components/FormularioCompra.vue'
 import HistorialMovimientos from '../components/HistorialMovimientos.vue'
 
 const routes = [
@@ -30,9 +30,9 @@ const routes = [
     component: PanelView
   },
   {
-    path: '/comprar-vender',
-    name: 'compraVenta',
-    component: CompraVenta
+    path: '/comprar',
+    name: 'compra',
+    component: FormularioCompra
   },
   {
     path: '/historialMovimientos',

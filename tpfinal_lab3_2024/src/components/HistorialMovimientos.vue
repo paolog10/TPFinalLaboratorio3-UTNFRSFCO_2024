@@ -34,6 +34,13 @@
           </tr>
         </tbody>
       </table>
+      <button
+        type="button"
+        class="btn-cancelar"
+        @click="redirijirPantallaPrincipal"
+      >
+        Cancelar
+      </button>
     </div>
   </div>
 </template>
@@ -65,7 +72,14 @@ export default {
     } catch (error) {
       console.error("Error al obtener las transacciones: ", error);
     }
+  },
+
+  methods: {
+    redirijirPantallaPrincipal() {
+      this.$router.push('/panel');
+    }
   }
+
 };
 </script>
 
@@ -120,6 +134,24 @@ button:hover {
   justify-content: center;
   align-items: center;
   height: 100vh; /* Altura completa de la pantalla */
+}
+
+.btn-cancelar {
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1; 
+  margin: 0 5px; 
+}
+
+.btn-cancelar {
+  background-color: #ff9800;
+}
+
+.btn-cancelar:hover {
+  background-color: #fb8c00;
 }
 </style>
 

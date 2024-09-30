@@ -3,11 +3,11 @@
     <nav class="barra-navegacion">
       <div>
         <span>{{ darMensajeBienvenida }}</span>
-        <router-link to="/comprar-vender" class="comprar-vender">
-          Comprar/Vender
+        <router-link to="/comprar" class="comprar-vender">
+          Comprar
         </router-link>
         <router-link to="/historialMovimientos" class="comprar-vender">
-          Mi Historial
+          Historial
         </router-link>
       </div>
       <button 
