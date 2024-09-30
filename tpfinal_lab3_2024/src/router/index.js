@@ -4,6 +4,7 @@ import LoginView from '../views/LoginView.vue'
 import PanelView from '../views/PanelView.vue'
 import FormularioCompra from '../components/FormularioCompra.vue'
 import HistorialMovimientos from '../components/HistorialMovimientos.vue'
+import FormularioVenta from '../components/FormularioVenta.vue'
 
 const routes = [
   // {
@@ -33,6 +34,11 @@ const routes = [
     path: '/comprar',
     name: 'compra',
     component: FormularioCompra
+  },
+  {
+    path: '/vender',
+    name: 'venta',
+    component: FormularioVenta
   },
   {
     path: '/historialMovimientos',

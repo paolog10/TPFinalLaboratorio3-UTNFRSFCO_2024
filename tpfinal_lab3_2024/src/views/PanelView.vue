@@ -4,7 +4,10 @@
       <div>
         <span>{{ darMensajeBienvenida }}</span>
         <router-link to="/comprar" class="comprar-vender">
-          Comprar
+          Compra
+        </router-link>
+        <router-link to="/vender" class="comprar-vender">
+          Venta
         </router-link>
         <router-link to="/historialMovimientos" class="comprar-vender">
           Historial

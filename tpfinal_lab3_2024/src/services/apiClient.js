@@ -23,6 +23,15 @@ export const nuevaCompra = async (datosCompra) => {
   } 
 };
 
+export const nuevaVenta = async (datosCompra) => {
+  try {
+    let response = await apiClient.post('transactions', datosCompra);
+    console.log("response: ", response)
+  } catch (error) {
+    console.error('Error al vender, intente nuevamente', error);
+  } 
+};
+
 export const obtenerTodasTransacciones = async (clienteId) => {
   try {
     const response = await apiClient.get(`transactions?q={"user_id":"${clienteId}"}`);

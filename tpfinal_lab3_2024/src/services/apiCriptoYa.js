@@ -26,7 +26,7 @@ export const obtenerPrecios = async () => {
 
 export const obtenerPrecioAskCriptomoneda = async (criptomoneda) => {
   try {
-    const response = await apiCriptoYa.get(`/${criptomoneda}/ARS/0.1`);
+    const response = await apiCriptoYa.get(`/${criptomoneda}/ARS/1`);
     
     const precioAsk = response.data.ask;
     console.log(`Precio ask de ${criptomoneda}:`, precioAsk);
@@ -34,6 +34,20 @@ export const obtenerPrecioAskCriptomoneda = async (criptomoneda) => {
     return precioAsk;
   } catch (error) {
     console.error(`Error al obtener el precio ask de ${criptomoneda}:`, error);
+    throw error;
+  }
+};
+
+export const obtenerPrecioBidCriptomoneda = async (criptomoneda) => {
+  try {
+    const response = await apiCriptoYa.get(`/${criptomoneda}/ARS/1`);
+    
+    const precioBid = response.data.bid;
+    console.log(`Precio bid de ${criptomoneda}:`, precioBid);
+    
+    return precioBid;
+  } catch (error) {
+    console.error(`Error al obtener el precio bid de ${criptomoneda}:`, error);
     throw error;
   }
 };
