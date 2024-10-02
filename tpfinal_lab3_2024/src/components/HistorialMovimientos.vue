@@ -3,12 +3,12 @@
     <h1>Historial de Movimientos de: {{ clienteId }}</h1>
 
     <div 
-      v-if="historialMovimientos.length === 0"
+      v-if="this.historialMovimientos === null" 
       class="spinner-container"
     >
       <LoadingSpinner />
     </div>
-  
+
     <div v-else>
       <table class="tabla-precios-criptomonedas">
         <thead>
@@ -29,7 +29,12 @@
             <td>{{ movimiento.action === 'purchase' ? 'Compra' : 'Venta' }}</td>
             <td>{{ new Date(movimiento.datetime).toLocaleDateString() }} {{ new Date(movimiento.datetime).toLocaleTimeString() }}</td>
             <td>
-              <button>Ver</button>
+              <button
+                @click="eliminarFila(movimiento._id)"
+                class="btn-eliminar"
+              >
+                Eliminar
+              </button>
             </td>
           </tr>
         </tbody>
@@ -46,8 +51,9 @@
 </template>
 
 <script>
-import { obtenerTodasTransacciones } from '../services/apiClient';
+import { obtenerTodasTransacciones, eliminarTransaccion } from '../services/apiClient';
 import LoadingSpinner from './LoadingSpinner.vue';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'HistorialMovimientos',
@@ -64,20 +70,36 @@ export default {
   },
 
   async mounted() {
-    try {
-      console.log("clienteId: ", this.clienteId);
-      const resultadosTransacciones = await obtenerTodasTransacciones(this.clienteId);
-      this.historialMovimientos = resultadosTransacciones;
-      console.log("Transacciones obtenidas: ", resultadosTransacciones);
-    } catch (error) {
-      console.error("Error al obtener las transacciones: ", error);
-    }
+    await this.cargarTransacciones();
   },
 
   methods: {
     redirijirPantallaPrincipal() {
       this.$router.push('/panel');
-    }
+    },
+
+    async cargarTransacciones() {
+      try {
+        const resultadosTransacciones = await obtenerTodasTransacciones(this.clienteId);
+        this.historialMovimientos = resultadosTransacciones;
+
+      } catch (error) {
+        console.error("Error al obtener las transacciones: ", error);
+      }
+    },
+    
+    async eliminarFila(_id){
+      const toast = useToast();
+      try {
+        const resultado = await eliminarTransaccion(_id);
+        toast.success(`Se eliminó el registro correctamente: ${resultado}`);
+        
+        await this.cargarTransacciones();
+      } catch (error) {
+        toast.error(`Error al eliminar el registro: ${error.message}`);
+      }
+    },
+
   }
 
 };
@@ -117,18 +139,6 @@ tr:hover td {
   background-color: #c8e4c3;
 }
 
-button {
-  padding: 5px 10px;
-  background-color: #017BFE;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #005bb5;
-}
-
 .spinner-container {
   display: flex;
   justify-content: center;
@@ -152,6 +162,19 @@ button:hover {
 
 .btn-cancelar:hover {
   background-color: #fb8c00;
+}
+
+.btn-eliminar{
+  background-color: red;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  background-color: #d83939;
 }
 </style>
 

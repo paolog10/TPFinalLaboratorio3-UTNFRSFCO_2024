@@ -42,4 +42,14 @@ export const obtenerTodasTransacciones = async (clienteId) => {
   }
 };
 
+export const eliminarTransaccion = async (_id) => {
+  try {
+    const response = await apiClient.delete(`/transactions/${_id}`);
+    console.log("response: ", response);
+    //return response.data;
+  } catch (error) {
+    console.error('Error al eliminar la transacción, intente nuevamente ', error);
+  }
+};
+
 export default apiClient
