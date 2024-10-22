@@ -9,47 +9,39 @@ profe - Esto ayuda a que si se recarga la página, no se pierdan los datos (ya q
 //   headers: {'x-apikey': '60eb09146661365596af552f'}
 // });
 
+// const apiClient = axios.create({
+//   baseURL: "https://labor3-d60e.restdb.io/rest/",
+//   headers: { "x-apikey": "64a2e9bc86d8c525a3ed8f63" },
+// });
+
 const apiClient = axios.create({
-  baseURL: "https://labor3-d60e.restdb.io/rest/",
-  headers: { "x-apikey": "64a2e9bc86d8c525a3ed8f63" },
+  baseURL: "https://laboratorio3-5459.restdb.io/rest/",
+  headers: {"x-apikey": "64a57c2b86d8c50fe6ed8fa5"}
 });
 
 export const nuevaCompra = async (datosCompra) => {
-  try {
-    let response = await apiClient.post('transactions', datosCompra);
-    console.log("response: ", response)
-  } catch (error) {
-    console.error('Error al comprar, intente nuevamente', error);
-  } 
+  let response = await apiClient.post('transactions', datosCompra);
+  return response;
 };
 
 export const nuevaVenta = async (datosCompra) => {
-  try {
-    let response = await apiClient.post('transactions', datosCompra);
-    console.log("response: ", response)
-  } catch (error) {
-    console.error('Error al vender, intente nuevamente', error);
-  } 
+  let response = await apiClient.post('transactions', datosCompra);
+  return response;
 };
 
 export const obtenerTodasTransacciones = async (clienteId) => {
-  try {
-    const response = await apiClient.get(`transactions?q={"user_id":"${clienteId}"}`);
-    console.log("response: ", response)
-    return response.data;
-  } catch (error) {
-    console.error('Error al obtener transacciones, intente nuevamente ', error);
-  }
+  const response = await apiClient.get(`transactions?q={"user_id":"${clienteId}"}`);
+  return response.data;
 };
 
 export const eliminarTransaccion = async (_id) => {
-  try {
-    const response = await apiClient.delete(`/transactions/${_id}`);
-    console.log("response: ", response);
-    //return response.data;
-  } catch (error) {
-    console.error('Error al eliminar la transacción, intente nuevamente ', error);
-  }
+  const response = await apiClient.delete(`/transactions/${_id}`);
+  return response;
+};
+
+export const editarTransaccion = async (id, data) => {
+  const response = await apiClient.patch(`/transactions/${id}`, data);
+  return response;
 };
 
 export default apiClient
