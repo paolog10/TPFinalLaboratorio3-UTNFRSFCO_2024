@@ -52,4 +52,18 @@ export const obtenerPrecioBidCriptomoneda = async (criptomoneda) => {
   }
 };
 
+export const obtenerPrecioTotalBidCriptomoneda = async (criptomoneda) => {
+  try {
+    const response = await apiCriptoYa.get(`/${criptomoneda}/ARS/1`);
+    
+    const precioTotalBid = response.data.totalBid;
+    console.log(`Precio totalBid de ${criptomoneda}:`, precioTotalBid);
+    
+    return precioTotalBid;
+  } catch (error) {
+    console.error(`Error al obtener el precio totalBid de ${criptomoneda}:`, error);
+    throw error;
+  }
+};
+
 export default apiCriptoYa

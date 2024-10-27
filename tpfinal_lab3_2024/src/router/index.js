@@ -5,6 +5,7 @@ import PanelView from '../views/PanelView.vue'
 import FormularioCompra from '../components/FormularioCompra.vue'
 import HistorialMovimientos from '../components/HistorialMovimientos.vue'
 import FormularioVenta from '../components/FormularioVenta.vue'
+import EstadoActualView from '../views/EstadoActualView.vue'
 
 const routes = [
   // {
@@ -44,6 +45,11 @@ const routes = [
     path: '/historialMovimientos',
     name: 'HistorialMovimientos',
     component: HistorialMovimientos
+  },
+  {
+    path: '/estadoActual',
+    name: 'EstadoActualView',
+    component: EstadoActualView
   },
 ]
 

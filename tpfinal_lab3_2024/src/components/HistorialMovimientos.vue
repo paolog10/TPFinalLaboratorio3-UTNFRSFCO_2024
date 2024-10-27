@@ -30,7 +30,7 @@
             <td>{{ new Date(transaccion.datetime).toLocaleDateString() }} {{ new Date(transaccion.datetime).toLocaleTimeString() }}</td>
             <td>
               <button 
-                @click="editarFila(transaccion._id, transaccion.crypto_code, transaccion.crypto_amount, transaccion.money)"
+                @click="editarFila(transaccion._id, transaccion.crypto_amount)"
                 class="boton-editar-transaccion"
               >
                 Editar
@@ -59,7 +59,7 @@
       <!--escucho el evento hijo @guardar-edicion - escuchar eventos y ejecutar métodos desde el hijo al padre-->
       <FormularioEdicion
         :datosEdicion="datosFormularioEdicion"
-        @guardar-edicion="editarFila"
+        @guardar-edicion="guardarEdicion"
         @cancelar-edicion="cancelarEdicion"
       />
 
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { obtenerTodasTransacciones, eliminarTransaccion } from '../services/apiClient';
+import { obtenerTodasTransacciones, eliminarTransaccion, editarTransaccion } from '../services/apiClient';
 import LoadingSpinner from './LoadingSpinner.vue';
 import { useToast } from 'vue-toastification';
 import FormularioEdicion from './FormularioEdicion.vue';
@@ -121,38 +121,47 @@ export default {
       }
     },
     
-    async editarFila(id, crypto_code,crypto_amount, money){
+    async editarFila(id, crypto_amount) {
       const toast = useToast();
-      toast.info("Edicion");
+      toast.info("Edición iniciada");
 
-      let editarCriptomoneda = {
+      // Datos para el formulario de edición
+      this.datosFormularioEdicion = {
         id: id,
-        crypto_code: crypto_code,
         crypto_amount: crypto_amount,
-        money: money
-        //edicion: true
+        edicion: true, // Indica que se está editando
       };
-      console.log("editarCriptomoneda: ", editarCriptomoneda)
 
-      //asigno los datos al objeto de edición
-      this.datosFormularioEdicion = { ...editarCriptomoneda, edicion: true };
       console.log("datosFormularioEdicion: ", this.datosFormularioEdicion);
-
-      // try {
-      //   const resultado = await editarTransaccion(this.datosFormularioEdicion.id, editarCriptomoneda);
-      //   toast.success(`La transaccion se edito correctamente: ${resultado}`);
-        
-      //   await this.cargarTransacciones();
-      // } catch (e) {
-      //   toast.error(`Error al editar la transaccion`);
-      // }      
     },
     
+    async guardarEdicion(datosEditados) {
+      console.log("datosEditados: ", datosEditados)
+      const toast = useToast();
+
+      try {
+        const resultado = await editarTransaccion(
+          datosEditados.id, 
+          {crypto_amount: datosEditados.crypto_amount,}
+        );
+
+        console.log("resultado: ", resultado)
+        toast.success("La transacción se editó correctamente.");
+
+        await this.cargarTransacciones();
+
+        this.datosFormularioEdicion.edicion = false;
+      } catch (error) {
+        toast.error("Error al editar la transacción.");
+        console.error(error);
+      }
+    },
+
     cancelarEdicion() {
       this.datosFormularioEdicion.edicion = false;
       const toast = useToast();
       toast.warning(`Se canceló la edición de la transaccion:`);
-    }
+    },
 
   }
 
