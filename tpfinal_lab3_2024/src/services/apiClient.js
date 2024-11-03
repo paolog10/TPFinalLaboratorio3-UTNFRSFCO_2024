@@ -44,4 +44,10 @@ export const editarTransaccion = async (id, data) => {
   return response;
 };
 
+export const obtenerTransaccion = async (_id) => {
+  const response = await apiClient.get(`/transactions/${_id}`);
+  console.log("response en axios: ", response)
+  return response.data;
+};
+
 export default apiClient

@@ -29,6 +29,9 @@
             <td>{{ transaccion.action === 'purchase' ? 'Compra' : 'Venta' }}</td>
             <td>{{ new Date(transaccion.datetime).toLocaleDateString() }} {{ new Date(transaccion.datetime).toLocaleTimeString() }}</td>
             <td>
+              <router-link :to="{ name: 'HistorialMovimientosDetalle', params: { id: transaccion._id }}">
+                <button class="btn-ver">Ver</button>
+              </router-link><br><br>
               <button 
                 @click="editarFila(transaccion._id, transaccion.crypto_amount)"
                 class="boton-editar-transaccion"
@@ -248,5 +251,15 @@ tr:hover td {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.btn-ver{
+  background-color: #4caf50;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 </style>
 
