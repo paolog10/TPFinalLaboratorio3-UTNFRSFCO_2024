@@ -9,7 +9,7 @@
     
     <form @submit.prevent="guardarCambios">
       
-      <div>
+      <!-- <div>
         <label for="crypto_code">Criptomoneda:</label>
         <input 
           type="text" 
@@ -17,19 +17,21 @@
           id="crypto_code" 
           disabled 
         />
-      </div>
+      </div> -->
 
       <div>
-        <label for="crypto_amount">Cantidad:</label>
+        <label for="crypto_amount">Cantidad: </label>
         <input 
           type="text" 
           v-model="formularioEdicion.crypto_amount" 
-          id="crypto_amount" 
+          id="crypto_amount"
+          placeholder="Ingrese cantidad" 
           required 
         />
       </div>
+      <br>
 
-      <div>
+      <!-- <div>
         <label for="money">Precio Pagado $ARS:</label>
         <input 
           type="text" 
@@ -37,16 +39,19 @@
           id="money" 
           disabled 
         />
-      </div>
+      </div> -->
 
       <button 
         type="submit"
+        class="btn-compra
+        "
       >
         Guardar Cambios
       </button>
       
       <button
         @click="cancelarEdicion"
+        class="btn-cancelar"
       >
         Cancelar
       </button>
@@ -86,7 +91,6 @@ export default {
           this.mostrarFormulario = true;
         }
       },
-      deep: true,
     },
   },
   
@@ -112,6 +116,32 @@ export default {
   background-color: #f2f2f2;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-compra, .btn-cancelar {
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1; 
+  margin: 0 5px; 
+}
+
+.btn-compra {
+  background-color: #4CAF50;
+}
+
+.btn-compra:hover {
+  background-color: #45a049;
+}
+
+.btn-cancelar {
+  background-color: #ff9800;
+}
+
+.btn-cancelar:hover {
+  background-color: #fb8c00;
 }
 
 </style>

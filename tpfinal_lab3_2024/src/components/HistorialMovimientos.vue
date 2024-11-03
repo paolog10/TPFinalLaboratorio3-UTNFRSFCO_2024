@@ -57,6 +57,7 @@
         Cancelar
       </button>
       <br>
+      <br>
 
       <!--:datosEdicion="datosFormularioEdicion" enlazamos datos desde el componente padre al componente hijo-->
       <!--escucho el evento hijo @guardar-edicion - escuchar eventos y ejecutar métodos desde el hijo al padre-->
@@ -128,18 +129,16 @@ export default {
       const toast = useToast();
       toast.info("Edición iniciada");
 
-      // Datos para el formulario de edición
       this.datosFormularioEdicion = {
         id: id,
         crypto_amount: crypto_amount,
-        edicion: true, // Indica que se está editando
+        edicion: true, 
       };
 
       console.log("datosFormularioEdicion: ", this.datosFormularioEdicion);
     },
     
     async guardarEdicion(datosEditados) {
-      console.log("datosEditados: ", datosEditados)
       const toast = useToast();
 
       try {
