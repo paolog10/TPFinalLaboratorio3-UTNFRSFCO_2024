@@ -30,6 +30,10 @@
           </tr>
         </tbody>
       </table>
+
+      <CarteraGraficoView 
+        :criptomonedas="criptomonedas"
+      />
       
     </div>
 
@@ -47,6 +51,7 @@
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { obtenerTodasTransacciones } from '../services/apiClient';
 import { obtenerPrecioTotalBidCriptomoneda } from '../services/apiCriptoYa';
+import CarteraGraficoView from './CarteraGraficoView.vue';
 
 
 export default {
@@ -54,6 +59,7 @@ export default {
 
   components: {
     LoadingSpinner,
+    CarteraGraficoView
   },
 
   data() {
