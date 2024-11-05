@@ -15,7 +15,12 @@
         <router-link to="/estadoActual" class="comprar-vender">
           Estado Actual |
         </router-link>
+        <router-link to="/analisisInversion" class="comprar-vender">
+          Inversión |
+        </router-link>
       </div>
+      <router-view />
+
       <button 
         @click="cerrarSesion" 
         class="btn-cerrar-sesion"

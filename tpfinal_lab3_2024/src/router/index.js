@@ -7,6 +7,7 @@ import HistorialMovimientos from '../components/HistorialMovimientos.vue'
 import FormularioVenta from '../components/FormularioVenta.vue'
 import EstadoActualView from '../views/EstadoActualView.vue'
 import HistorialMovimientosDetalleView from '../views/HistorialMovimientosDetalleView.vue'
+import AnalisisInversionView from '../views/AnalisisInversionView.vue'
 
 const routes = [
   // {
@@ -57,6 +58,11 @@ const routes = [
     name: 'HistorialMovimientosDetalle',
     component: HistorialMovimientosDetalleView,
     props: true,
+  },
+  {
+    path: '/analisisInversion',
+    name: 'AnalisisInversionView',
+    component: AnalisisInversionView,
   },
 ]
 

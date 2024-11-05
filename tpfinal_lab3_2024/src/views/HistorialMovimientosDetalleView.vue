@@ -19,9 +19,9 @@
     
     <div 
       v-else
-      class="cargando"  
+      class="spinner-container"  
     >
-      <p>Cargando...</p>
+      <LoadingSpinner />
     </div>
 
   </div>
@@ -29,9 +29,14 @@
 
 <script>
   import { obtenerTransaccion } from '../services/apiClient';
+  import LoadingSpinner from '@/components/LoadingSpinner.vue';
 
   export default {
     name: "HistorialMovimientosDetalleView",
+
+    components: {
+      LoadingSpinner,
+    },
 
     props: {
       id: {

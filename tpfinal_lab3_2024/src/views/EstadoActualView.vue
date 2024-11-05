@@ -4,7 +4,7 @@
     <h1>Estado Actual</h1>
 
     <div 
-      v-if="this.criptomonedas === 0" 
+      v-if="this.criptomonedas.length === 0" 
       class="spinner-container"
     >
       <LoadingSpinner />
@@ -26,7 +26,7 @@
           <tr v-for="(criptomoneda, index) in criptomonedas" :key="index">
             <td>{{ criptomoneda.crypto_code }}</td>
             <td>{{ criptomoneda.crypto_amount.toFixed(2) }}</td>
-            <td>${{ criptomoneda.money.toFixed(2) }}</td>
+            <td>$ {{ criptomoneda.money.toFixed(2) }}</td>
           </tr>
         </tbody>
       </table>
@@ -34,12 +34,12 @@
     </div>
 
     <button
-        type="button"
-        class="btn-cancelar"
-        @click="volverAtras"
-      >
-        Cancelar
-      </button>
+      type="button"
+      class="btn-cancelar"
+      @click="volverAtras"
+    >
+      Volver
+    </button>
   </div>
 </template>
 
@@ -108,10 +108,10 @@ export default {
           try {
             let responseTotalBid = await obtenerPrecioTotalBidCriptomoneda(criptomoneda.crypto_code);
 
-            // Si es undefined, se establece en 0.
+            //Si es undefined, se establece en 0.
             responseTotalBid = responseTotalBid || 0;
 
-            // Calcula el valor en dinero.
+            //Calcula el valor en dinero.
             criptomoneda.money = criptomoneda.crypto_amount * responseTotalBid;
           } catch (error) {
             console.error(`Error al obtener el totalBid para ${criptomoneda.crypto_code}:`, error);
@@ -215,22 +215,4 @@ tr:hover td {
   cursor: pointer;
 }
 
-.titulo-con-flecha {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Espacio entre el botón y el título */
-}
-
-.btn-flecha {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-size: 1.5rem;
-  color: #007bff; /* Color de la flecha */
-}
-
-.btn-flecha:hover {
-  color: #0056b3; /* Color al hacer hover */
-}
 </style>

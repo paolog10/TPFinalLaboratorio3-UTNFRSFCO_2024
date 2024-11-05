@@ -12,16 +12,20 @@ const endpointsPrecios = [
 ];
 
 export const obtenerPrecios = async () => {
-  try {
-    const preciosPromises = endpointsPrecios.map((endpoint) =>
-      apiCriptoYa.get(endpoint)
-    );
-    const precios = await Promise.all(preciosPromises);
-    return precios.map((response) => response.data);
-  } catch (error) {
-    console.error("Error al obtener los precios:", error);
-    throw error;
+  const precios = [];
+
+  for (const endpoint of endpointsPrecios) {
+    try {
+      //Espero a que cada precio sea obtenido
+      const respuesta = await apiCriptoYa.get(endpoint);
+      
+      precios.push(respuesta.data);
+    } catch (error) {
+      console.error(`Error al obtener el precio del endpoint ${endpoint}:`, error);
+    }
   }
+
+  return precios;
 };
 
 export const obtenerPrecioAskCriptomoneda = async (criptomoneda) => {
@@ -52,6 +56,7 @@ export const obtenerPrecioBidCriptomoneda = async (criptomoneda) => {
   }
 };
 
+//Pantalla Estado Actual y Analisis de Inversiones, obtengo el precio de venta + comision
 export const obtenerPrecioTotalBidCriptomoneda = async (criptomoneda) => {
   try {
     const response = await apiCriptoYa.get(`/${criptomoneda}/ARS/1`);

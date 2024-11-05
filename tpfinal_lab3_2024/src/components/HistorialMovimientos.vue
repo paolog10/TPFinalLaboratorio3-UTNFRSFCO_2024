@@ -54,7 +54,7 @@
         class="btn-cancelar"
         @click="redirijirPantallaPrincipal"
       >
-        Cancelar
+        Volver
       </button>
       <br>
       <br>
