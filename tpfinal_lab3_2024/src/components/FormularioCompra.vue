@@ -104,7 +104,8 @@ export default {
       try {
         const resultado = await nuevaCompra(compraCriptomoneda);
         this.compraExitosa = true;
-        toast.success(`Compra exitosa: ${resultado}`);
+        console.log(resultado)
+        toast.success(`Compra exitosa!`);
 
         this.$router.push('/historialMovimientos'); //redirijo
         this.resetFormulario();

@@ -105,6 +105,7 @@ export default {
     async cargarTransacciones() {
       try {
         const resultadosTransacciones = await obtenerTodasTransacciones(this.clienteId);
+        console.log("resultadosTransacciones: ", resultadosTransacciones)
         this.historialMovimientos = resultadosTransacciones;
 
       } catch (e) {

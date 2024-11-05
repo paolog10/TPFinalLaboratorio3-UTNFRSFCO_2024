@@ -54,11 +54,12 @@
 
 <script>
 import { useToast } from 'vue-toastification';
-import { nuevaVenta } from '../services/apiClient';
+import { nuevaVenta, obtenerTodasTransacciones } from '../services/apiClient';
 import { obtenerPrecioBidCriptomoneda } from "../services/apiCriptoYa";
 
 export default {
-  name: 'FormularioCompra',
+  name: 'FormularioVenta',
+
   data() {
     return {
       cantidadVentaCriptomoneda: null,
@@ -66,7 +67,8 @@ export default {
       ventaExitosa: false,
       errorVenta: null,
       clienteId: localStorage.getItem('idUsuario'),
-      precioBid: null
+      precioBid: null,
+      criptomonedas: [] 
     }
   },
 
@@ -80,12 +82,31 @@ export default {
         cantidadParseada > 0 &&
         this.criptomonedaSeleccionada;
 
+      //traigo la cartera del cliente
+      const cartera = await obtenerTodasTransacciones(this.clienteId);
+      console.log("cartera: ", cartera)
+
+      this.procesarTransacciones(cartera);
+
+      const cantidadDisponible = this.criptomonedas.find(
+        c => c.crypto_code === this.criptomonedaSeleccionada
+      )?.crypto_amount || 0; // Cambiar para obtener la cantidad de criptomonedas ? si es undefined
+      console.log("cantidadDisponible: ", cantidadDisponible)
+
       if (!esFormularioCorrecto) {
         if (isNaN(cantidadParseada) || cantidadParseada <= 0) {
           this.errorVenta = 'Debe ingresar una cantidad válida.';
         } else if (!this.criptomonedaSeleccionada) {
           this.errorVenta = 'Debe seleccionar una criptomoneda.';
         }
+        toast.error(this.errorVenta);
+        this.ventaExitosa = false;
+        this.resetFormulario();
+        return;
+      }
+
+      if (cantidadParseada > cantidadDisponible) {
+        this.errorVenta = `No puedes vender más de ${cantidadDisponible} ${this.criptomonedaSeleccionada}.`;
         toast.error(this.errorVenta);
         this.ventaExitosa = false;
         this.resetFormulario();
@@ -104,7 +125,8 @@ export default {
       try {
         const resultado = await nuevaVenta(ventaCriptomoneda);
         this.ventaExitosa = true;
-        toast.success(`Venta exitosa: ${resultado}`);
+        console.log(resultado)
+        toast.success(`Venta exitosa!`);
 
         this.$router.push('/historialMovimientos');
         this.resetFormulario();
@@ -112,6 +134,31 @@ export default {
         toast.error(`Error al realizar la compra: ${error.message}`);
       }
 
+    },
+
+    //Sumo las cantidades nomás
+    procesarTransacciones(transacciones) {
+      // Recorre las transacciones y ajusta las cantidades.
+      for (let i = 0; i < transacciones.length; i++) {
+        const { crypto_code, crypto_amount, action } = transacciones[i];
+        const amount = parseFloat(crypto_amount);
+
+        // Busca si la criptomoneda ya está en el array.
+        let criptomoneda = this.criptomonedas.find(c => c.crypto_code === crypto_code);
+
+        if (!criptomoneda) {
+          // Si no existe, agrega un nuevo objeto con la criptomoneda y cantidad inicial 0.
+          criptomoneda = { crypto_code, crypto_amount: 0, money: 0 };
+          this.criptomonedas.push(criptomoneda);
+        }
+
+        // Actualiza el valor dependiendo de la acción.
+        if (action === 'purchase') {
+          criptomoneda.crypto_amount += amount;
+        } else if (action === 'sale') {
+          criptomoneda.crypto_amount -= amount;
+        }
+      }
     },
 
     async obtenerPrecio() {
