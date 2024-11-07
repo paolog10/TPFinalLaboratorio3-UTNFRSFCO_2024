@@ -26,7 +26,7 @@
             <td 
               :class="resultado.money > 0 ? 'positivo' : 'negativo'"
             >
-              {{ resultado.money > 0 ? '+ ' : '- ' }}$ {{ resultado.money.toFixed(2) * -1 }}
+              $ {{ resultado.money.toFixed(2) }}
             </td>
           </tr>
         </tbody>
