@@ -65,17 +65,18 @@
       @cancelar-edicion="cancelarEdicion"
       />
       
-    </div>
+      <button
+        type="button"
+        class="btn-cancelar"
+        @click="redirijirPantallaPrincipal"
+      >
+        Volver
+      </button>
+      <br>
+      <br>
+      
+    </div><br>
     
-    <button
-      type="button"
-      class="btn-cancelar"
-      @click="redirijirPantallaPrincipal"
-    >
-      Volver
-    </button>
-    <br>
-    <br>
   
   </div>
 </template>
@@ -228,7 +229,7 @@ tr:hover td {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Altura completa de la pantalla */
+  height: 50vh; /* Altura completa de la pantalla */
 }
 
 .btn-cancelar {

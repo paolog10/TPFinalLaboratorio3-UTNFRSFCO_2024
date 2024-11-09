@@ -183,7 +183,7 @@ tr:hover td {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Altura completa de la pantalla */
+  height: 50vh; /* Altura completa de la pantalla */
 }
 
 .comprar-vender {

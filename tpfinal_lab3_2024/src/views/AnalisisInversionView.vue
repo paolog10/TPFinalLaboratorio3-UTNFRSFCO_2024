@@ -38,15 +38,16 @@
           </tr>
         </tbody>
       </table><br>
+      
+      <button
+        type="button"
+        class="btn-cancelar"
+        @click="volverAtras"
+      >
+        Volver
+      </button>
     </div>
 
-    <button
-      type="button"
-      class="btn-cancelar"
-      @click="volverAtras"
-    >
-      Volver
-    </button>
   </div>
   
 </template>
@@ -215,6 +216,6 @@ tr:hover td {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Altura completa de la pantalla */
+  height: 50vh; /* Altura completa de la pantalla */
 }
 </style>
