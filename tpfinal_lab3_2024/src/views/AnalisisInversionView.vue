@@ -3,10 +3,17 @@
     <h2>Análisis de Inversiones</h2>
 
     <div 
-      v-if="this.resultados.length === 0" 
+      v-if="this.resultados.length === 0 && !datosCargados" 
       class="spinner-container"
     >
       <LoadingSpinner />
+    </div>
+
+    <div
+      v-else-if="this.resultados.length === 0 && datosCargados"
+      class="no-criptomonedas-container"
+    >
+      <p>No hay criptomonedas, por favor, compre alguna para ver datos.</p>
     </div>
 
     <div
@@ -56,7 +63,8 @@ export default {
   data() {
     return {
       resultados: [],
-      clienteId: localStorage.getItem('idUsuario')
+      clienteId: localStorage.getItem('idUsuario'),
+      datosCargados: false,
     };
   },
 
@@ -134,12 +142,21 @@ export default {
       this.procesarInversion(response);
     } catch (error) {
       console.error('Error al obtener las transacciones:', error);
+    } finally {
+      this.datosCargados = true;
     }
   },
 };
 </script>
 
 <style scoped>
+.no-criptomonedas-container {
+  text-align: center;
+  margin: 20px;
+  font-size: 20px;
+  color: #ff0000; 
+}
+
 .tabla-precios-criptomonedas {
   max-width: 50%;
   margin: 20px auto;

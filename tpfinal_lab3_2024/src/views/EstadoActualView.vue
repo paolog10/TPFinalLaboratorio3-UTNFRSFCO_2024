@@ -4,10 +4,17 @@
     <h1>Estado Actual</h1>
 
     <div 
-      v-if="this.criptomonedas.length === 0" 
+      v-if="this.criptomonedas.length === 0 && !datosCargados" 
       class="spinner-container"
     >
       <LoadingSpinner />
+    </div>
+
+    <div
+      v-else-if="this.criptomonedas.length === 0 && datosCargados"
+      class="no-criptomonedas-container"
+    >
+      <p>No hay criptomonedas, por favor, compre alguna para ver datos.</p>
     </div>
 
     <div
@@ -66,7 +73,8 @@ export default {
     return {
       clienteId: localStorage.getItem('idUsuario'),
       criptomonedas: [],
-      totalDinero: 0
+      totalDinero: 0,
+      datosCargados: false,
     }
   },
 
@@ -78,6 +86,8 @@ export default {
       this.procesarTransacciones(response);
     } catch (error) {
       console.error('Error al obtener las transacciones:', error);
+    } finally {
+      this.datosCargados = true;
     }
   },
 
@@ -140,6 +150,12 @@ export default {
 </script>
 
 <style scoped>
+.no-criptomonedas-container {
+  text-align: center;
+  margin: 20px;
+  font-size: 20px;
+  color: #ff0000;
+}
 
 .tabla-precios-criptomonedas {
   max-width: 50%;

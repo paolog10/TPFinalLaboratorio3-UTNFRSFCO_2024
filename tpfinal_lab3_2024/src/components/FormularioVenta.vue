@@ -106,7 +106,7 @@ export default {
       }
 
       if (cantidadParseada > cantidadDisponible) {
-        this.errorVenta = `No puedes vender más de ${cantidadDisponible} ${this.criptomonedaSeleccionada}.`;
+        this.errorVenta = `No puedes vender más de ${cantidadDisponible} ${this.criptomonedaSeleccionada} o no tiene esa cantidad para vender. Verifique`;
         toast.error(this.errorVenta);
         this.ventaExitosa = false;
         this.resetFormulario();

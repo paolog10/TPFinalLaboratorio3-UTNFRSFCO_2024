@@ -3,10 +3,17 @@
     <h1>Historial de Movimientos de: {{ clienteId }}</h1>
 
     <div 
-      v-if="this.historialMovimientos === null" 
+      v-if="this.historialMovimientos.length === 0 && !datosCargados" 
       class="spinner-container"
     >
       <LoadingSpinner />
+    </div>
+
+    <div
+      v-else-if="this.historialMovimientos.length === 0 && datosCargados"
+      class="no-criptomonedas-container"
+    >
+      <p>No hay criptomonedas, por favor, compre alguna para ver datos.</p>
     </div>
 
     <div v-else>
@@ -49,25 +56,27 @@
           </tr>
         </tbody>
       </table>
-      <button
-        type="button"
-        class="btn-cancelar"
-        @click="redirijirPantallaPrincipal"
-      >
-        Volver
-      </button>
-      <br>
-      <br>
-
+      
       <!--:datosEdicion="datosFormularioEdicion" enlazamos datos desde el componente padre al componente hijo-->
       <!--escucho el evento hijo @guardar-edicion - escuchar eventos y ejecutar métodos desde el hijo al padre-->
       <FormularioEdicion
-        :datosEdicion="datosFormularioEdicion"
-        @guardar-edicion="guardarEdicion"
-        @cancelar-edicion="cancelarEdicion"
+      :datosEdicion="datosFormularioEdicion"
+      @guardar-edicion="guardarEdicion"
+      @cancelar-edicion="cancelarEdicion"
       />
-
+      
     </div>
+    
+    <button
+      type="button"
+      class="btn-cancelar"
+      @click="redirijirPantallaPrincipal"
+    >
+      Volver
+    </button>
+    <br>
+    <br>
+  
   </div>
 </template>
 
@@ -89,7 +98,8 @@ export default {
     return {
       clienteId: localStorage.getItem('idUsuario'),
       historialMovimientos: [], // Este array debe llenarse con los datos de las transacciones
-      datosFormularioEdicion: {}
+      datosFormularioEdicion: {},
+      datosCargados: false,
     };
   },
 
@@ -110,6 +120,8 @@ export default {
 
       } catch (e) {
         console.error("Error al obtener las transacciones");
+      } finally {
+        this.datosCargados = true;
       }
     },
     
@@ -172,6 +184,13 @@ export default {
 </script>
 
 <style scoped>
+.no-criptomonedas-container {
+  text-align: center;
+  margin: 20px;
+  font-size: 20px;
+  color: #ff0000;
+}
+
 .tabla-precios-criptomonedas {
   max-width: 50%;
   margin: 20px auto;
