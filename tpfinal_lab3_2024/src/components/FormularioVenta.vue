@@ -64,7 +64,6 @@ export default {
     return {
       cantidadVentaCriptomoneda: null,
       criptomonedaSeleccionada: '',
-      ventaExitosa: false,
       errorVenta: null,
       clienteId: localStorage.getItem('idUsuario'),
       precioBid: null,
@@ -100,7 +99,6 @@ export default {
           this.errorVenta = 'Debe seleccionar una criptomoneda.';
         }
         toast.error(this.errorVenta);
-        this.ventaExitosa = false;
         this.resetFormulario();
         return;
       }
@@ -108,7 +106,6 @@ export default {
       if (cantidadParseada > cantidadDisponible) {
         this.errorVenta = `No puedes vender más de ${cantidadDisponible} ${this.criptomonedaSeleccionada} o no tiene esa cantidad para vender. Verifique`;
         toast.error(this.errorVenta);
-        this.ventaExitosa = false;
         this.resetFormulario();
         return;
       }
@@ -121,10 +118,9 @@ export default {
         money: (this.precioBid * cantidadParseada).toFixed(2),
         datetime: new Date().toISOString()
       };
-      console.log("ventaCriptomoneda: ", ventaCriptomoneda);
+
       try {
         const resultado = await nuevaVenta(ventaCriptomoneda);
-        this.ventaExitosa = true;
         console.log(resultado)
         toast.success(`Venta exitosa!`);
 
@@ -261,7 +257,4 @@ label {
   font-weight: bold;
 }
 
-.exito {
-  color: green;
-}
 </style>

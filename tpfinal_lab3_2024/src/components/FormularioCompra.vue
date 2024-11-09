@@ -185,13 +185,6 @@ export default {
   background-color: #fb8c00;
 }
 
-/* Alinear los botones horizontalmente */
-.botones {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
 input,
 select {
   width: 100%;
@@ -212,7 +205,4 @@ label {
   font-weight: bold;
 }
 
-.exito {
-  color: green;
-}
 </style>
