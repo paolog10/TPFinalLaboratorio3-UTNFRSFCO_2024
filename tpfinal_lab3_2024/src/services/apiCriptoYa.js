@@ -28,7 +28,7 @@ export const obtenerPrecios = async () => {
   return precios;
 };
 
-export const obtenerPrecioAskCriptomoneda = async (criptomoneda) => {
+export const obtenerPrecioAskCripotmoneda = async (criptomoneda) => {
   try {
     const response = await apiCriptoYa.get(`/${criptomoneda}/ARS/1`);
     

@@ -63,7 +63,6 @@ export default {
     return {
       cantidadCompraCriptomoneda: null,
       criptomonedaSeleccionada: '',
-      compraExitosa: false,
       errorCompra: null,
       clienteId: localStorage.getItem('idUsuario'),
       precioAsk: null
@@ -87,7 +86,6 @@ export default {
           this.errorCompra = 'Debe seleccionar una criptomoneda.';
         }
         toast.error(this.errorCompra);
-        this.compraExitosa = false;
         this.resetFormulario();
         return;
       }
@@ -103,7 +101,6 @@ export default {
 
       try {
         const resultado = await nuevaCompra(compraCriptomoneda);
-        this.compraExitosa = true;
         console.log(resultado)
         toast.success(`Compra exitosa!`);
 

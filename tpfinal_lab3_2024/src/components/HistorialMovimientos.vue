@@ -14,6 +14,13 @@
       class="no-criptomonedas-container"
     >
       <p>No hay criptomonedas, por favor, compre alguna para ver datos.</p>
+      <button
+        type="button"
+        class="btn-cancelar"
+        @click="redirijirPantallaPrincipal"
+      >
+        Volver
+      </button>
     </div>
 
     <div v-else>
@@ -74,10 +81,9 @@
       </button>
       <br>
       <br>
-      
-    </div><br>
+
+    </div>
     
-  
   </div>
 </template>
 

@@ -15,6 +15,13 @@
       class="no-criptomonedas-container"
     >
       <p>No hay criptomonedas, por favor, compre alguna para ver datos.</p>
+      <button
+        type="button"
+        class="btn-cancelar"
+        @click="volverAtras"
+      >
+        Volver
+      </button>
     </div>
 
     <div
@@ -93,6 +100,10 @@ export default {
   },
 
   methods: {
+    redirijirPantallaPrincipal() {
+      this.$router.push('/panel');
+    },
+    
     //Objetivo: unir las transacciones según criptomoneda y sumar o restar cantidades según su accion
     async procesarTransacciones(transacciones) {
       // Recorre las transacciones y ajusta las cantidades.
