@@ -114,11 +114,10 @@ export default {
     if (usuarioId) {
       this.esLoguedo = true;
     }
+    
+    this.MostrarPrecios();
   },
 
-  created(){
-    this.MostrarPrecios();
-  }
 }
 </script>
 
@@ -193,7 +192,6 @@ tr:hover td {
 </style>
 
 <!--
-created: Se ejecuta cuando el componente es creado (antes de estar en el DOM). Útil para iniciar datos o hacer peticiones API.
 mounted: Se ejecuta después de que el componente ha sido añadido al DOM. Útil para interacciones con el DOM.
 computed: Son propiedades derivadas que se calculan de forma eficiente y reactiva, y se actualizan solo cuando los datos que dependen de ellas cambian.
 -->
