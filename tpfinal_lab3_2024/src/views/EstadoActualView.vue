@@ -139,6 +139,9 @@ export default {
           criptomoneda.money = 0;
         }
       }
+
+      //nuevo array si hay alguna cripto con cantidad = 0
+      this.criptomonedas = this.criptomonedas.filter(c => c.crypto_amount > 0);
     },
 
     volverAtras() {
